@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنتدى الوطني لشباب المستقبل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        :root { --maroon: #8b0303; --maroon-dark: #6c0403; --gold: #cc962a; --gold-light: #f6d27c; --cream: #f7f7f5; --ink: #1c1917; --navy: #6c0403; --navy-light: #1c1917; --teal: #cc962a; --teal-dark: #a87818; --white: #ffffff; --gray: #e7e0d0; --red: #b91c1c; --green: #15803d; }
+        body { background: var(--cream) radial-gradient(circle at 50% 0, #ffffff 0, var(--cream) 60%); color: var(--ink); direction: rtl; line-height: 1.6; }
+        .cover { width: 100%; background: #fff; line-height: 0; }
+        .cover img { width: 100%; height: auto; display: block; }
+        .flag-strip { height: 8px; background: linear-gradient(to bottom, #ce1126 0 33%, #ffffff 33% 66%, #000000 66% 100%); }
+        header { background-color: var(--white); color: var(--ink); padding: 12px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--gold); box-shadow: 0 4px 10px rgba(108,4,3,0.08); }
+        header.slim .header-content { justify-content: flex-start; }
+        header.slim .logo-area { display: none; }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-circle { width: 65px; height: 65px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 3px solid var(--gold); flex-shrink: 0; }
+        .logo-circle img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
+        .brand-text h1 { font-size: 1.2rem; font-weight: 800; }
+        .brand-text p { font-size: 0.8rem; color: var(--maroon); margin-top: 2px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: 700; font-family: inherit; transition: 0.3s; text-decoration: none; display: inline-block; text-align: center; }
+        .btn-primary { background: linear-gradient(180deg, #a40505, var(--maroon-dark)); color: var(--white); border: 2px solid var(--gold); box-shadow: 0 6px 14px rgba(108,4,3,0.3); }
+        .btn-primary:hover { filter: brightness(1.15); transform: translateY(-1px); }
+        .btn-primary:disabled { opacity: .6; cursor: not-allowed; }
+        .btn-dark { background-color: var(--navy-light); color: var(--white); border: 1px solid var(--gold); }
+        .btn-red { background-color: var(--red); color: var(--white); }
+        .btn-green { background-color: var(--green); color: var(--white); }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .hero { padding: 40px 20px 0; text-align: center; }
+        .hero .container { background: var(--white); border: 2px solid var(--gold); border-radius: 20px; padding: 35px 25px; position: relative; box-shadow: 0 10px 30px rgba(108,4,3,0.08); max-width: 800px; }
+        .hero .container::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--gold-light); border-radius: 15px; pointer-events: none; }
+        .hero h2 { font-size: 2rem; font-weight: 800; margin-bottom: 20px; color: var(--ink); }
+        .hero h2 span { color: var(--maroon); }
+        .hero ul { list-style: none; font-size: 1.1rem; font-weight: 600; display: inline-block; text-align: right; }
+        .hero ul li::before { content: "◆ "; color: var(--gold); font-size: .8em; }
+        .form-card { background: var(--white); padding: 30px; border-radius: 20px; border-top: 6px solid var(--maroon); box-shadow: 0 10px 30px rgba(108,4,3,0.08); margin-bottom: 30px; }
+        .form-card h2 { text-align: center; margin-bottom: 25px; color: var(--maroon); font-size: 1.6rem; }
+        .form-card h2::after { content: ""; display: block; width: 70px; height: 3px; background: var(--gold); margin: 10px auto 0; border-radius: 2px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.95rem; }
+        .form-group input, .form-group select { width: 100%; padding: 12px 15px; border: 2px solid var(--gray); background: #fffdf8; border-radius: 10px; font-family: inherit; font-size: 1rem; transition: 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(204,150,42,0.2); }
+        .alert { padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center; font-weight: 700; display: none; }
+        .alert-success { background-color: #dcfce7; color: #166534; display: block; }
+        .alert-error { background-color: #fee2e2; color: #991b1b; display: block; }
+        #adminPanel { display: none; background: #f1ede4; min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; z-index: 200; overflow-y: auto; padding: 20px; }
+        .table-responsive { overflow-x: auto; background: var(--white); border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; text-align: right; white-space: nowrap; }
+        th, td { padding: 15px; border-bottom: 1px solid var(--gray); }
+        th { background-color: var(--maroon-dark); color: var(--white); font-weight: 700; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(28,25,23,0.75); z-index: 300; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: var(--white); padding: 30px; border-radius: 15px; border-top: 6px solid var(--maroon); width: 100%; max-width: 400px; position: relative; }
+        .close-btn { position: absolute; top: 15px; left: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #78716c; }
+        @media (max-width: 768px) { .header-content { flex-direction: column; text-align: center; } .hero h2 { font-size: 1.5rem; } .hero { padding-top: 25px; } }
+    
+        /* ===== نفس تصميم البانر ===== */
+        body { background: linear-gradient(180deg, #ffffff 0%, #f3f3f1 100%); min-height: 100vh; }
+        .hero .container { background: rgba(255,255,255,0.85); backdrop-filter: blur(4px); border: 2px solid var(--gold); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+        .hero .welcome { font-size: 1.1rem; font-weight: 700; color: #57534e; }
+        .hero h2 { line-height: 1.3; margin-bottom: 14px; }
+        .hero h2 .t1 { display: block; color: #111; font-size: 2.2rem; }
+        .hero h2 .t2 { display: block; color: var(--maroon); font-size: 2.6rem; }
+        .pill { display: inline-block; background: linear-gradient(180deg, #fbe3a0, #e0b04a); color: #1c1917; font-weight: 800; padding: 6px 28px; border-radius: 999px; border: 1px solid var(--gold); margin-bottom: 22px; box-shadow: 0 3px 8px rgba(204,150,42,0.35); }
+        .form-card { border-top: none; background: rgba(255,255,255,0.92); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+        .form-card h2 { display: block; color: #fff; background: linear-gradient(180deg, #a40505, #5a0202); border: 2px solid var(--gold); border-radius: 999px; padding: 10px 20px; font-size: 1.4rem; box-shadow: 0 6px 14px rgba(108,4,3,0.3); }
+        .form-card h2::after { display: none; }
+        form .btn-primary { display: flex; align-items: center; justify-content: center; gap: 10px; border-radius: 999px; }
+        form .btn-primary::before { content: "\2714"; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fbe3a0, #cc962a); color: #fff; font-size: .9rem; }
+        .swoosh { display: block; width: 100%; height: 110px; margin-top: 10px; line-height: 0; }
+        .swoosh svg { width: 100%; height: 100%; display: block; }
+        .hero .intro { font-size: 1.1rem; font-weight: 600; line-height: 2; color: #292524; max-width: 640px; margin: 0 auto 12px; }
+        .hero .intro strong { color: var(--maroon); }
+        .hero .cta { font-weight: 800; color: var(--maroon-dark); margin-bottom: 0; }
+        @media (max-width: 768px) { .hero h2 .t1 { font-size: 1.6rem; } .hero h2 .t2 { font-size: 1.9rem; } .swoosh { height: 70px; } }
+    </style>
+</head>
+<body>
+
+    <div class="cover">
+        <img src="banner.jpg" alt="المنتدى الوطني لشباب المستقبل - النسخة الثانية - تسجيل الحضور">
+    </div>
+    <div class="flag-strip"></div>
+
+    <header class="slim">
+        <div class="header-content">
+            <div class="logo-area">
+                <div class="logo-circle">
+<img src="logo.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;">
+
+                    
+                </div>
+                <div class="brand-text">
+                    <h1>المنتدى الوطني لشباب المستقبل</h1>
+                    <p>كيان الشباب بناة المستقبل — بوابة التسجيل</p>
+                </div>
+            </div>
+            <button onclick="showLoginModal()" class="btn btn-dark">🔒 دخول المنظمين</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <p class="welcome">أهلاً بك في</p>
+            <h2><span class="t1">المنتدى الوطني</span><span class="t2">لشباب المستقبل</span></h2>
+            <div class="pill">النسخة الثانية</div>
+            <p class="intro">بوابتك للتعرف عن قرب على رؤية <strong>"الشباب بناة المستقبل"</strong> ومحطات النجاح التي حققناها معًا، والفرص والمبادرات التي نعدّها لتمكين الشباب في المرحلة المقبلة.</p>
+            <p class="intro cta">خطوة واحدة تفصلك عن الانضمام إلينا.. سجّل الآن لحضور المنتدى. <span class="arrow">⬇️</span></p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="form-card">
+            <h2>استمارة تسجيل الحضور</h2>
+            <div id="formMessage" class="alert"></div>
+            <form id="regForm" enctype="multipart/form-data">
+                <div class="form-group"><label>الاسم ثلاثي *</label><input type="text" id="full_name" required></div>
+                <div class="form-group"><label>رقم التليفون (واتساب) *</label><input type="tel" id="phone" required placeholder="01xxxxxxxxx"></div>
+                <div class="form-group"><label>البريد الإلكتروني (اختياري)</label><input type="email" id="email"></div>
+                <div class="form-group">
+                    <label>المحافظة *</label>
+                    <select id="governorate" required>
+                        <option value="">اختر المحافظة</option>
+                        <option value="القاهرة">القاهرة</option>
+                        <option value="الجيزة">الجيزة</option>
+                        <option value="الإسكندرية">الإسكندرية</option>
+                        <option value="القليوبية">القليوبية</option>
+                        <option value="الشرقية">الشرقية</option>
+                        <option value="الدقهلية">الدقهلية</option>
+                        <option value="المنوفية">المنوفية</option>
+                        <option value="الغربية">الغربية</option>
+                        <option value="البحيرة">البحيرة</option>
+                        <option value="كفر الشيخ">كفر الشيخ</option>
+                        <option value="دمياط">دمياط</option>
+                        <option value="بورسعيد">بورسعيد</option>
+                        <option value="الإسماعيلية">الإسماعيلية</option>
+                        <option value="السويس">السويس</option>
+                        <option value="شمال سيناء">شمال سيناء</option>
+                        <option value="جنوب سيناء">جنوب سيناء</option>
+                        <option value="الفيوم">الفيوم</option>
+                        <option value="بني سويف">بني سويف</option>
+                        <option value="المنيا">المنيا</option>
+                        <option value="أسيوط">أسيوط</option>
+                        <option value="سوهاج">سوهاج</option>
+                        <option value="قنا">قنا</option>
+                        <option value="الأقصر">الأقصر</option>
+                        <option value="أسوان">أسوان</option>
+                        <option value="البحر الأحمر">البحر الأحمر</option>
+                        <option value="الوادي الجديد">الوادي الجديد</option>
+                        <option value="مطروح">مطروح</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>المؤهل الدراسي *</label><input type="text" id="qualification" required placeholder="مثال: بكالوريوس هندسة"></div>
+                <div class="form-group"><label>الوظيفة *</label><input type="text" id="job" required placeholder="مثال: مهندس برمجيات"></div>
+                
+                <div class="form-group">
+                    <label>الصورة الشخصية *</label>
+                    <input type="file" id="photo" name="photo" accept="image/*" required style="border:2px dashed #e0c27a; padding:10px;">
+                </div>
+                <div class="form-group">
+                    <label>صورة البطاقة (وش) *</label>
+                    <input type="file" id="id_front" name="id_front" accept="image/*" required style="border:2px dashed #e0c27a; padding:10px;">
+                </div>
+                <div class="form-group">
+                    <label>صورة البطاقة (ظهر) *</label>
+                    <input type="file" id="id_back" name="id_back" accept="image/*" required style="border:2px dashed #e0c27a; padding:10px;">
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 15px;">تسجيل</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="swoosh"><svg viewBox="0 0 1600 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,60 C400,0 900,110 1600,20 L1600,120 L0,120 Z" fill="#cc0c1b" stroke="#cc962a" stroke-width="3"/><path d="M0,80 C400,25 900,125 1600,50 L1600,120 L0,120 Z" fill="#fff"/><path d="M0,100 C400,55 900,135 1600,80 L1600,120 L0,120 Z" fill="#131519"/></svg></div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="hideLoginModal()">×</button>
+            <h2 style="text-align: center; margin-bottom: 20px; color: var(--navy);">دخول المنظمين</h2>
+            <div id="loginError" class="alert alert-error"></div>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group"><label>اسم المستخدم</label><input type="text" id="admin_user" required></div>
+                <div class="form-group"><label>كلمة المرور</label><input type="password" id="admin_pass" required></div>
+                <button type="submit" class="btn btn-dark" style="width: 100%;">دخول</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="adminPanel">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            <h2 style="color: var(--navy);">لوحة التحكم</h2>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="downloadExcel()" class="btn btn-green">تحميل Excel</button>
+                <button onclick="downloadImages()" class="btn btn-green">تحميل الصور</button>
+                <button onclick="logout()" class="btn btn-red">خروج</button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th><th>الاسم</th><th>التليفون</th><th>الإيميل</th><th>المحافظة</th><th>المؤهل</th><th>الوظيفة</th><th>الصورة</th><th>البطاقة (وش/ظهر)</th><th>التاريخ</th>
+                    </tr>
+                </thead>
+                <tbody id="adminTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('regForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const msg = document.getElementById('formMessage');
+            btn.disabled = true; btn.textContent = 'جاري الإرسال...';
+            msg.className = 'alert'; msg.textContent = '';
+
+            const formData = new FormData();
+            formData.append('full_name', document.getElementById('full_name').value);
+            formData.append('phone', document.getElementById('phone').value);
+            formData.append('email', document.getElementById('email').value);
+            formData.append('governorate', document.getElementById('governorate').value);
+            formData.append('qualification', document.getElementById('qualification').value);
+            formData.append('job', document.getElementById('job').value);
+
+            const photo = document.getElementById('photo').files[0];
+            const idFront = document.getElementById('id_front').files[0];
+            const idBack = document.getElementById('id_back').files[0];
+            if (photo) formData.append('photo', photo);
+            if (idFront) formData.append('id_front', idFront);
+            if (idBack) formData.append('id_back', idBack);
+
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    msg.className = 'alert alert-success';
+                    msg.textContent = '✅ ' + data.message;
+                    document.getElementById('regForm').reset();
+                } else {
+                    msg.className = 'alert alert-error';
+                    msg.textContent = '❌ ' + data.error;
+                }
+            } catch(err) {
+                msg.className = 'alert alert-error';
+                msg.textContent = '❌ حدث خطأ في الاتصال بالسيرفر';
+            }
+            btn.disabled = false; btn.textContent = 'تسجيل';
+        });
+
+        function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
+        function hideLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const errBox = document.getElementById('loginError');
+            errBox.className = 'alert'; 
+            const res = await fetch('/api/admin/login', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: document.getElementById('admin_user').value,
+                    password: document.getElementById('admin_pass').value
+                })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                localStorage.setItem('admin_token', data.token);
+                hideLoginModal(); loadAdminPanel();
+            } else {
+                errBox.className = 'alert alert-error';
+                errBox.textContent = data.error;
+            }
+        }
+
+        async function loadAdminPanel() {
+            const token = localStorage.getItem('admin_token');
+            if (!token) return;
+            document.getElementById('adminPanel').style.display = 'block';
+            try {
+                const res = await fetch('/api/admin/data', { headers: { 'Authorization': `Bearer ${token}` } });
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                document.getElementById('adminTableBody').innerHTML = data.map((r, i) => `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td style="font-weight: 700;">${r.full_name}</td>
+                        <td>${r.phone}</td>
+                        <td>${r.email || '-'}</td>
+                        <td>${r.governorate || '-'}</td>
+                        <td>${r.qualification || '-'}</td>
+                        <td>${r.job || '-'}</td>
+                        <td>${r.photo_path ? `<a href="${r.photo_path}" target="_blank"><img src="${r.photo_path}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;"></a>` : '-'}</td>
+                        <td>${r.id_front_path ? `<a href="${r.id_front_path}" target="_blank"><img src="${r.id_front_path}" style="width: 50px; height: 50px; object-fit: cover;"></a>` : '-'} | ${r.id_back_path ? `<a href="${r.id_back_path}" target="_blank"><img src="${r.id_back_path}" style="width: 50px; height: 50px; object-fit: cover;"></a>` : '-'}</td>
+                        <td style="font-size: 0.8rem;">${new Date(r.created_at).toLocaleString('ar-EG')}</td>
+                    </tr>
+                `).join('');
+            } catch(err) {
+                alert('الجلسة منتهية'); logout();
+            }
+        }
+
+        async function downloadExcel() {
+            const token = localStorage.getItem('admin_token');
+            const res = await fetch('/api/admin/export', { headers: { 'Authorization': `Bearer ${token}` } });
+            if (!res.ok) { alert('فشل التحميل'); return; }
+            const blob = await res.blob();
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob); a.download = 'registrations.xlsx'; a.click();
+        }
+
+        async function downloadImages() {
+            const token = localStorage.getItem('admin_token');
+            const res = await fetch('/api/admin/images', { headers: { 'Authorization': `Bearer ${token}` } });
+            if (!res.ok) { alert('فشل التحميل'); return; }
+            const blob = await res.blob();
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob); a.download = 'registration-images.zip'; a.click();
+        }
+
+        function logout() {
+            localStorage.removeItem('admin_token');
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+        if (localStorage.getItem('admin_token')) loadAdminPanel();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
